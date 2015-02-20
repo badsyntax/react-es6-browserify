@@ -1,9 +1,7 @@
-const React = require('react');
-import {MainSection} from './components/MainSection.react.jsx';
+import React from 'react';
+import {App} from './components/App.react.jsx';
 
-const render = () => React.renderComponent(
-  <MainSection />,
-  document.getElementById('content')
+React.render(
+  <App />,
+  document.getElementById('app')
 );
-
-render();

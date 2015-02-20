@@ -1,5 +1,4 @@
-const React = require('react');
-
+import React from 'react';
 
 class _Body {
   getClassName() {
