@@ -12,10 +12,12 @@ var es6ify = require('es6ify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var serveStatic = require('serve-static');
+var sass = require('gulp-sass');
 var config = require('./config.json');
 
 var htmlFiles = 'app/**/*.html';
 var jsxFiles = 'app/jsx/**/*.jsx';
+var scssFiles = 'app/scss/**/*.scss';
 var vendorFiles = [
   'bower_components/react/react-with-addons.js',
   'node_modules/es6ify/node_modules/traceur/bin/traceur-runtime.js'
@@ -83,19 +85,28 @@ gulp.task('livereload', function() {
   });
 });
 
-gulp.task('watch', function() {
-  gulp.watch(htmlFiles, ['html']);
-});
-
 gulp.task('lint', function() {
-  return gulp
+  gulp
     .src(['./*.js', './*.json'])
     .pipe(jshint())
     .pipe(jshint.reporter(require('jshint-stylish')));
 });
 
+gulp.task('sass', function () {
+  gulp
+    .src(scssFiles)
+    .pipe(sass())
+    .pipe(gulp.dest(config.distPath + '/css'));
+});
+
+gulp.task('watch', function() {
+  gulp.watch(htmlFiles, ['html']);
+  gulp.watch(scssFiles, ['sass']);
+});
+
 gulp.task('default', [
   'vendor',
+  'sass',
   'scripts',
   'livereload',
   'watch',
