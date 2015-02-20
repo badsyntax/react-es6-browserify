@@ -2,7 +2,8 @@
   "name": "react-es6-browserify",
   "version": "0.0.5",
   "dependencies": {
-    "react": "^0.12.2"
+    "react": "^0.13.0-beta.2",
+    "react-canvas": "0.0.1"
   },
   "devDependencies": {
     "browserify": "^8.1.3",

@@ -19,7 +19,8 @@ var htmlFiles = 'app/**/*.html';
 var jsxFiles = 'app/jsx/**/*.jsx';
 var scssFiles = 'app/scss/**/*.scss';
 var vendorFiles = [
-  'node_modules/es6ify/node_modules/traceur/bin/traceur-runtime.js'
+  'node_modules/es6ify/node_modules/traceur/bin/traceur-runtime.js',
+  'app/js/**/*.js'
 ];
 var vendorBuild = config.distPath + '/vendor';
 var requireFiles = './node_modules/react/react.js';

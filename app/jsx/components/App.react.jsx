@@ -1,17 +1,10 @@
 import React from 'react';
-import {Header} from './Header.react.jsx';
-import {Body} from './Body.react.jsx';
-import {Footer} from './Footer.react.jsx';
+import {Canvas} from './Canvas.react.jsx';
 
-class _App {
+export class App extends React.Component {
   render() {
     return (
-      <div className="container">
-        <Header />
-        <Body />
-        <Footer />
-      </div>
+      <Canvas className="canvas" />
     );
   }
 }
-export const App = React.createClass(_App.prototype);
