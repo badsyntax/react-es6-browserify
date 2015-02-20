@@ -18,59 +18,6 @@ The compiled code can be found in dist/bundle/app.js.
 * Compilation of the jsx [1]
 * Compilation of ES6 to ES5 [2], [3]
 
-## Compilation step
-
-This shows only the relevant steps. All the steps can be found in _gulpfile.js_. The main compilation step is shown below. Most of the inspiration comes from [7]. You should check this post, there is a great gulpfile included!
-
-Because we also include react in the browserify steps, we use watchify to make the incremental builds fast.
-
-```js
-function compileScripts(watch) {
-    gutil.log('Starting browserify');
-
-    // The main script
-    var entryFile = './app/jsx/app.jsx';
-
-    // Set experimental to true to use features like let, const,...
-    es6ify.traceurOverrides = {experimental: true};
-
-    var bundler;
-    // Use watchify for fast updates, otherwise use browserify
-    if (watch) {
-        bundler = watchify(entryFile);
-    } else {
-        bundler = browserify(entryFile);
-    }
-
-    // Include react
-    bundler.require(requireFiles);
-
-    // Compile the jsx files
-    bundler.transform(reactify);
-
-    // Compile ES6 features. Make sure to set configure is you use .jsx files
-    bundler.transform(es6ify.configure(/.jsx/));
-
-    var rebundle = function () {
-        // Debug: true: creates sourcemaps
-        var stream = bundler.bundle({ debug: true});
-
-        stream.on('error', function (err) { console.error(err) });
-        // Source uses vinyl-source-stream. This lets us use the browserify api directly instead of using the gulp-browserify plugin [4].
-        stream = stream.pipe(source(entryFile));
-
-        // rename the resulting file to app.js and save it to dist/bundle
-        stream.pipe(rename('app.js'));
-        stream.pipe(gulp.dest('dist/bundle'));
-    }
-    
-    // When watchify see an update, run rebundle.
-    bundler.on('update', rebundle);
-    return rebundle();
-}
-
-```
-
 ## React with ES6
 
 ### ES6 classes
@@ -79,14 +26,14 @@ function compileScripts(watch) {
 import React from 'react'; // import react
 
 class _MainSection {
-    render() {
-        return (
-            <div>
-                <h1>Example of React with es6 and browserify</h1>
-                <Body />
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <h1>Example of React with es6 and browserify</h1>
+        <Body />
+      </div>
+    );
+  }
 }
 export const MainSection = React.createClass(_MainSection.prototype);
 ```
@@ -101,19 +48,19 @@ import {MainSection} from './components/MainSection.react.jsx';
 
 ```js
 class _Body {
-    getClassName() {
-        return 'foo';
-    }
+  getClassName() {
+    return 'foo';
+  }
 
-    render() {
-        const x = 'x';
+  render() {
+    const x = 'x';
 
-        return (
-            <div className={`${x} ${this.getClassName()} bar`}>
-                Hello there!
-            </div>
-        );
-    }
+    return (
+      <div className={`${x} ${this.getClassName()} bar`}>
+        Hello there!
+      </div>
+    );
+  }
 }
 ```
 
