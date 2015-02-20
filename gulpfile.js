@@ -19,7 +19,6 @@ var htmlFiles = 'app/**/*.html';
 var jsxFiles = 'app/jsx/**/*.jsx';
 var scssFiles = 'app/scss/**/*.scss';
 var vendorFiles = [
-  'bower_components/react/react-with-addons.js',
   'node_modules/es6ify/node_modules/traceur/bin/traceur-runtime.js'
 ];
 var vendorBuild = config.distPath + '/vendor';
