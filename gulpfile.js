@@ -106,6 +106,7 @@ gulp.task('watch', function() {
 gulp.task('default', [
   'vendor',
   'sass',
+  'html',
   'scripts',
   'livereload',
   'watch',
