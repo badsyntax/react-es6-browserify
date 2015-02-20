@@ -3,7 +3,7 @@ import {Header} from './Header.react.jsx';
 import {Body} from './Body.react.jsx';
 import {Footer} from './Footer.react.jsx';
 
-class _App {
+export class App extends React.Component {
   render() {
     return (
       <div className="container">
@@ -14,4 +14,3 @@ class _App {
     );
   }
 }
-export const App = React.createClass(_App.prototype);

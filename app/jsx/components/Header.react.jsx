@@ -1,6 +1,6 @@
 import React from 'react';
 
-class _Header {
+export class Header extends React.Component {
   render() {
     return (
       <header>
@@ -9,4 +9,3 @@ class _Header {
     );
   }
 }
-export const Header = React.createClass(_Header.prototype);
