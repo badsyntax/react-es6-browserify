@@ -2,6 +2,8 @@
 
 This is a boilerplate repo for using react with ES6 and browserify, and running it with gulp.
 
+It also supports Sass compilation.
+
 ## Installation
 
 ```
