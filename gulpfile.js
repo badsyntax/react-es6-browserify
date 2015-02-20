@@ -51,7 +51,6 @@ gulp.task('scripts', function () {
   var bundler = browserify({
     cache: {},
     packageCache: {},
-    fullPaths: true,
     debug: true
   });
   bundler.add(entryFile);
