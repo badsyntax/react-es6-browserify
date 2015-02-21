@@ -13,7 +13,10 @@ var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var serveStatic = require('serve-static');
 var sass = require('gulp-sass');
-var config = require('./config.json');
+var nconf = require('nconf');
+
+// Load config from file
+nconf.file({ file: 'app/config/app.json' });
 
 var htmlFiles = 'app/**/*.html';
 var jsxFiles = 'app/jsx/**/*.jsx';
@@ -21,7 +24,7 @@ var scssFiles = 'app/scss/**/*.scss';
 var vendorFiles = [
   'node_modules/es6ify/node_modules/traceur/bin/traceur-runtime.js'
 ];
-var vendorBuild = config.distPath + '/vendor';
+var vendorBuild = nconf.get('distPath') + '/vendor';
 var requireFiles = './node_modules/react/react.js';
 
 gulp.task('vendor', function () {
@@ -31,14 +34,14 @@ gulp.task('vendor', function () {
 
 gulp.task('html', function () {
   return gulp.src(htmlFiles)
-    .pipe(gulp.dest(config.distPath));
+    .pipe(gulp.dest(nconf.get('distPath')));
 });
 
 gulp.task('server', function (next) {
   connect()
-  .use(serveStatic(config.distPath))
-  .listen(config.serverPort, function() {
-    gutil.log('Server listening on port:', config.serverPort);
+  .use(serveStatic(nconf.get('distPath')))
+  .listen(nconf.get('serverPort'), function() {
+    gutil.log('Server listening on port:', nconf.get('serverPort'));
     next();
   });
 });
@@ -67,7 +70,7 @@ gulp.task('scripts', function () {
     stream.on('error', function (err) { console.error(err); });
     stream = stream.pipe(source(entryFile));
     stream.pipe(rename('app.js'));
-    stream.pipe(gulp.dest(config.distPath+'/bundle'));
+    stream.pipe(gulp.dest(nconf.get('distPath')+'/bundle'));
   }
 
   bundler.on('update', rebundle);
@@ -76,10 +79,10 @@ gulp.task('scripts', function () {
 
 gulp.task('livereload', function() {
   livereload.listen({
-    port: config.livereloadPort,
-    basePath: config.distPath
+    port: nconf.get('livereloadPort'),
+    basePath: nconf.get('distPath')
   });
-  gulp.watch([config.distPath + '/**/*'], function (evt) {
+  gulp.watch([nconf.get('distPath') + '/**/*'], function (evt) {
     livereload.changed(evt.path);
   });
 });
@@ -95,7 +98,7 @@ gulp.task('sass', function () {
   gulp
     .src(scssFiles)
     .pipe(sass())
-    .pipe(gulp.dest(config.distPath + '/css'));
+    .pipe(gulp.dest(nconf.get('distPath') + '/css'));
 });
 
 gulp.task('watch', function() {
