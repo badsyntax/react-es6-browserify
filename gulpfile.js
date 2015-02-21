@@ -14,6 +14,7 @@ var source = require('vinyl-source-stream');
 var serveStatic = require('serve-static');
 var sass = require('gulp-sass');
 var nconf = require('nconf');
+var del = require('del');
 
 // Load config from file
 nconf.file({ file: 'app/config/app.json' });
@@ -26,6 +27,10 @@ var vendorFiles = [
 ];
 var vendorBuild = nconf.get('distPath') + '/vendor';
 var requireFiles = './node_modules/react/react.js';
+
+gulp.task('clean', function(next) {
+  del([nconf.get('distPath')+'/**/*'], next);
+})
 
 gulp.task('vendor', function () {
   return gulp.src(vendorFiles)
@@ -107,6 +112,7 @@ gulp.task('watch', function() {
 });
 
 gulp.task('default', [
+  'clean',
   'vendor',
   'sass',
   'html',
