@@ -74,7 +74,7 @@ gulp.task('scripts', ['clean'], function () {
   rebundle();
 });
 
-gulp.task('livereload', ['watch'], function() {
+gulp.task('livereload', ['build'], function() {
   livereload.listen({
     port: nconf.get('livereloadPort'),
     basePath: nconf.get('distPath')
