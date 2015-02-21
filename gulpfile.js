@@ -5,6 +5,8 @@ var gutil = require('gulp-util');
 var livereload = require('gulp-livereload');
 var rename = require('gulp-rename');
 var jshint = require('gulp-jshint');
+var sass = require('gulp-sass');
+
 var connect = require('connect');
 var browserify = require('browserify');
 var watchify = require('watchify');
@@ -12,7 +14,6 @@ var es6ify = require('es6ify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var serveStatic = require('serve-static');
-var sass = require('gulp-sass');
 var nconf = require('nconf');
 var del = require('del');
 
@@ -32,26 +33,17 @@ gulp.task('clean', function(next) {
   del([nconf.get('distPath')+'/**/*'], next);
 })
 
-gulp.task('vendor', function () {
+gulp.task('vendor', ['clean'], function () {
   return gulp.src(vendorFiles)
     .pipe(gulp.dest(vendorBuild));
 });
 
-gulp.task('html', function () {
+gulp.task('html', ['clean'], function () {
   return gulp.src(htmlFiles)
     .pipe(gulp.dest(nconf.get('distPath')));
 });
 
-gulp.task('server', function (next) {
-  connect()
-  .use(serveStatic(nconf.get('distPath')))
-  .listen(nconf.get('serverPort'), function() {
-    gutil.log('Server listening on port:', nconf.get('serverPort'));
-    next();
-  });
-});
-
-gulp.task('scripts', function () {
+gulp.task('scripts', ['clean'], function () {
 
   es6ify.traceurOverrides = {experimental: true};
 
@@ -82,7 +74,7 @@ gulp.task('scripts', function () {
   rebundle();
 });
 
-gulp.task('livereload', function() {
+gulp.task('livereload', ['watch'], function() {
   livereload.listen({
     port: nconf.get('livereloadPort'),
     basePath: nconf.get('distPath')
@@ -93,30 +85,43 @@ gulp.task('livereload', function() {
 });
 
 gulp.task('lint', function() {
-  gulp
+  return gulp
     .src(['./*.js', './*.json'])
     .pipe(jshint())
     .pipe(jshint.reporter(require('jshint-stylish')));
 });
 
-gulp.task('sass', function () {
-  gulp
+gulp.task('sass', ['clean'], function () {
+  return gulp
     .src(scssFiles)
     .pipe(sass())
     .pipe(gulp.dest(nconf.get('distPath') + '/css'));
 });
 
-gulp.task('watch', function() {
+gulp.task('server', ['watch'], function (next) {
+  connect()
+  .use(serveStatic(nconf.get('distPath')))
+  .listen(nconf.get('serverPort'), function() {
+    gutil.log('Server listening on port:', nconf.get('serverPort'));
+    next();
+  });
+});
+
+gulp.task('watch', ['build'], function() {
   gulp.watch(htmlFiles, ['html']);
   gulp.watch(scssFiles, ['sass']);
 });
 
-gulp.task('default', [
-  'clean',
+gulp.task('build', [
   'vendor',
   'sass',
   'html',
-  'scripts',
+  'scripts'
+]);
+
+gulp.task('default', [
+  'clean',
+  'build',
   'livereload',
   'watch',
   'server'
