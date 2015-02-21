@@ -25,9 +25,9 @@ The compiled code can be found in dist/bundle/app.js.
 ### ES6 classes
 
 ```js
-import React from 'react'; // import react
+import React from 'react';
 
-class _MainSection {
+export class MainSection extends React.Component {
   render() {
     return (
       <div>
@@ -37,10 +37,11 @@ class _MainSection {
     );
   }
 }
-export const MainSection = React.createClass(_MainSection.prototype);
 ```
 
-We can create ES6 classes, but have to export it with `React.createClass` [5]. Importing the created files can be done like this:
+We can use ES6 classes and can extend from React.Component. (React 0.13.0-beta requirement.)
+
+ES6 modules work too!
 
 ```js
 import {MainSection} from './components/MainSection.react.jsx';
@@ -49,7 +50,7 @@ import {MainSection} from './components/MainSection.react.jsx';
 ### String templating for classes
 
 ```js
-class _Body {
+export class Body extends React.Component {
   getClassName() {
     return 'foo';
   }
