@@ -1,24 +1,19 @@
 # Boilerplate for react with ES6 and browserify
 
-This is a boilerplate repo for using react with ES6 and browserify, and running it with gulp.
+This is a boilerplate repo for using react with ES6 and browserify. You'll need to
+be on a unix type system to run the npm scripts.
 
-It also supports Sass compilation.
-
-## Installation
+## npm scripts
 
 ```
-npm install
+npm start # Start the app in production mode
+npm run start-dev # Start the app in dev mode, watch for changes
 ```
-
-After the installation, run `gulp` and browse to _http://localhost:8888_
-
-The compiled code can be found in dist/bundle/app.js.
 
 ## What do you get
 
-* A gulpfile with livereload
-* Compilation of the jsx [1]
-* Compilation of ES6 to ES5 [2], [3]
+* Compilation of the jsx
+* Compilation of ES6 to ES5
 
 ## React with ES6
 
@@ -39,7 +34,7 @@ export class MainSection extends React.Component {
 }
 ```
 
-We can use ES6 classes and can extend from React.Component. (React 0.13.0-beta requirement.)
+We can use ES6 classes and can extend from React.Component. (React 0.13.0 requirement.)
 
 ES6 modules work too!
 
@@ -51,13 +46,13 @@ import {MainSection} from './components/MainSection.react.jsx';
 
 ```js
 export class Body extends React.Component {
+
   getClassName() {
     return 'foo';
   }
 
   render() {
-    const x = 'x';
-
+    var x = 'x';
     return (
       <div className={`${x} ${this.getClassName()} bar`}>
         Hello there!
@@ -68,14 +63,3 @@ export class Body extends React.Component {
 ```
 
 As you can see, you can use template literals [6] to create your classnames.
-
-## Sources
-
-* [0] Browserify - https://github.com/substack/node-browserify
-* [1] Reactify - https://github.com/andreypopp/reactify
-* [2] es6ify - https://github.com/thlorenz/es6ify
-* [3] traceur-compiler - https://github.com/google/traceur-compiler
-* [4] vinyl-source-stream - https://www.npmjs.org/package/vinyl-source-stream
-* [5] react-es6-class - https://github.com/bjoerge/react-es6-class
-* [6] Template Literals - https://github.com/google/traceur-compiler/wiki/LanguageFeatures#template-literals
-* [7] Fast build with browserify and reactjs - http://blog.avisi.nl/2014/04/25/how-to-keep-a-fast-build-with-browserify-and-reactjs/

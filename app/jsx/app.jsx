@@ -1,7 +1,7 @@
 import React from 'react';
 import 'react/addons';
 
-import {App} from './components/App.react.jsx';
+import {App} from './components/App.jsx';
 
 React.render(
   <App />,
