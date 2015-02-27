@@ -1,4 +1,5 @@
 import React from 'react';
+import {ExampleStore} from '../../stores/ExampleStore.jsx';
 
 export class Body extends React.Component {
 
