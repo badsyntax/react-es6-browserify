@@ -1,0 +1,15 @@
+/**
+ * List of already imported files
+ */
+$imported-files: () !default;
+
+/**
+ * Checks if a .scss file has already been imported by checking for presence in an index
+ */
+@function import-once($fileId) {
+  @if index($imported-files, $fileId) {
+    @return false;
+  }
+  $imported-files: append($imported-files, $fileId) !global;
+  @return true;
+}
