@@ -1,14 +1,16 @@
 import React from 'react';
+import Router from 'react-router';
 import {Header} from '../Header/Header.jsx';
-import {Body} from '../Body/Body.jsx';
 import {Footer} from '../Footer/Footer.jsx';
+
+var { RouteHandler } = Router;
 
 export class App extends React.Component {
   render() {
     return (
-      <div className="container">
+      <div className="app">
         <Header />
-        <Body />
+        <RouteHandler />
         <Footer />
       </div>
     );

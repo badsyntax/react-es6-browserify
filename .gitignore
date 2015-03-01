@@ -1,6 +1,5 @@
 node_modules
 bower_components
 dist
-*.log
+*.log*
 .DS_Store
-app/config/app.json

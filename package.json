@@ -3,20 +3,21 @@
   "version": "0.0.1",
   "repository": "https://github.com/badsyntax/react-es6-browserify",
   "scripts": {
-    "prestart": "npm install && npm run prep-dist-dir",
+    "prestart": "npm run prep-dist-dir",
     "prestart-dev": "npm run prestart",
     "start": "NODE_ENV=production npm run build && npm run compress-js && npm run start-server",
-    "start-dev": "NODE_ENV=development npm run build && `npm run start-reload-server & npm run watch`",
+    "start-dev": "NODE_ENV=development npm run build-dev && `npm run start-server & npm run watch`",
     "clean": "rm -rf ./dist/*",
     "prep-dist-dir": "npm run clean && mkdir -p dist/bundle",
     "html-copy": "cd app && find . -name \"*.html\" -type f -exec rsync -R {} ../dist/ \\;",
     "html-watch": "nodemon -e html -x \"npm run html-copy\" --include-path=\"./app\"",
     "browserify": "browserify --entry app/app.jsx --outfile dist/bundle/app.js --transform babelify --verbose",
-    "browserify-watch": "watchify --entry app/app.jsx --outfile dist/bundle/app.js --transform babelify --verbose",
+    "browserify-dev": "browserify --entry app/app.jsx --outfile dist/bundle/app.js --transform babelify --verbose --debug",
+    "browserify-watch": "watchify --entry app/app.jsx --outfile dist/bundle/app.js --transform babelify --verbose --debug",
     "compress-js": "uglify -s ./dist/bundle/app.js -o ./dist/bundle/app.js",
     "start-server": "cd dist && http-server -a localhost -p 8000 -c-1 -o",
-    "start-reload-server": "cd dist && reload -b -p 8000",
     "build": "npm run browserify && npm run html-copy && npm run sass",
+    "build-dev": "npm run build",
     "sass": "node-sass --output-style compressed --include-path ./app/scss ./app/scss/main.scss ./dist/css/main.css",
     "sass-dev": "node-sass --output-style expanded --source-map ./dist/css/main.css.map --include-path ./app/scss ./app/scss/main.scss ./dist/css/main.css",
     "sass-watch": "nodemon -e scss -x \" npm run sass-dev\" --include-path=\"./app\"",
@@ -24,19 +25,21 @@
   },
   "dependencies": {
     "flux": "^2.0.1",
-    "react": "^0.13.0-rc1"
+    "react": "^0.13.0-rc1",
+    "react-router": "badsyntax/react-router#0.13-compat-browserify-patch"
   },
   "devDependencies": {
     "babelify": "^5.0.3",
-    "browserify": "^8.1.3",
+    "browserify": "^9.0.3",
     "http-server": "^0.7.5",
     "node-sass": "^2.0.1",
     "nodemon": "^1.3.7",
-    "reload": "^0.1.0",
-    "uglify": "^0.1.1",
-    "watchify": "^2.3.0"
+    "watchify": "^2.4.0"
   },
   "engines": {
     "node": ">=0.10.0"
+  },
+  "browserify": {
+    "transform": ["babelify"]
   }
 }

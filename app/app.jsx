@@ -1,7 +1,7 @@
 import React from 'react';
-import {App} from './components/App/App.jsx';
+import Router from 'react-router';
+import {routes} from './routes.jsx';
 
-React.render(
-  <App />,
-  document.getElementById('app')
-);
+Router.run(routes, function (Handler) {
+  React.render(<Handler/>, document.body);
+});
