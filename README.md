@@ -1,19 +1,24 @@
 # Boilerplate for react with ES6 and browserify
 
-This is a boilerplate repo for using react with ES6 and browserify. You'll need to
-be on a unix type system to run the npm scripts.
+This is a boilerplate repo for using react with jsx, ES6 and browserify. You'll need to
+be on a unixy type system to run the npm scripts.
+
+This boilerplate will only really be useful once 0.13 is released and once other
+react libraries catch up (like react-router for example).
+
+## What do you get
+
+* Compilation of the jsx with sourcemaps
+* Compilation of ES6 to ES5
+* Compilation of Sass with sourcemaps
+* Handy npm scripts for development
 
 ## npm scripts
 
 ```
-npm start # Start the app in production mode
-npm run start-dev # Start the app in dev mode, watch for changes
+npm start # Build and start the app in production mode
+npm run start-dev # Build and start the app in dev mode, watch for changes
 ```
-
-## What do you get
-
-* Compilation of the jsx
-* Compilation of ES6 to ES5
 
 ## React with ES6
 
